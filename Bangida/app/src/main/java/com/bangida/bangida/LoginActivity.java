@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("email", email);
         params.put("password", password);
 
-        String apiKey = "https://bangidaapp.herokuapp.com/api/todo/auth/login";
+        String apiKey = "https://bangidaapp.herokuapp.com/api/bangida/auth/login";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 apiKey, new JSONObject(params), new Response.Listener<JSONObject>() {
