@@ -49,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         email_ET = findViewById(R.id.email_ET);
         pw_ET = findViewById(R.id.pw_ET);
         progressBar = findViewById(R.id.progress_bar);
-
         registerBtn = findViewById(R.id.registerBtn);
         utilService = new UtilService();
 
