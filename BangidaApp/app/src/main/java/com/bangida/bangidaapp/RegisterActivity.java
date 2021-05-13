@@ -203,6 +203,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onStart();
         SharedPreferences todo_pref = getSharedPreferences("user_todo", MODE_PRIVATE);
         if(todo_pref.contains("token")) {
+            // 한 번 로그인을 했었으면 MainActivity부터 열림.
             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             finish();
         }

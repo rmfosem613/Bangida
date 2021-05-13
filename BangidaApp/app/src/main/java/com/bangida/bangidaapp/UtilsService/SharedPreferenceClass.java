@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+// 로그인하면 token 값을 폰에 저장
 public class SharedPreferenceClass {
     private static final String USER_PREF = "user_todo";
     private SharedPreferences appShared;
@@ -42,6 +43,7 @@ public class SharedPreferenceClass {
         prefsEditor.putBoolean(key, value).commit();
     }
 
+    // 폰에 저장된 token 삭제
     public void clear() {
         prefsEditor.clear().commit();
     }
