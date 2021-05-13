@@ -3,6 +3,7 @@ package com.bangida.bangidaapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bangida.bangidaapp.UtilsService.SharedPreferenceClass;
 import com.bangida.bangidaapp.UtilsService.UtilService;
 
 import org.json.JSONException;
@@ -36,10 +38,13 @@ public class RegisterActivity extends AppCompatActivity {
     private Button loginBtn, registerBtn;
     private EditText name_Et, email_ET, pw_ET;
     ProgressBar progressBar;
+    private String name, email, password;
 
     // 사용자 편의를 위해 사용
     UtilService utilService;
-    private String name, email, password;
+    // 로그인 정보를 폰의 저장공간에 저장
+    SharedPreferenceClass sharedPreferenceClass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         registerBtn = findViewById(R.id.registerBtn);
         utilService = new UtilService();
+        
+        sharedPreferenceClass = new SharedPreferenceClass(this);
 
         // 로그인 창으로 이동
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                 email = email_ET.getText().toString();
                 password = pw_ET.getText().toString();
 
-                // 168번째 코드
+                // 176번째 코드
                 // EditText가 확인되면(true) 사용자 확인 진행
                 if(validate(v)) {
                     registerUser(v);
@@ -104,6 +111,9 @@ public class RegisterActivity extends AppCompatActivity {
                         
                         // token정보 : success, token, user(_id, username, email)값
                         String token = response.getString("token");
+
+                        // token 정보를 폰에 저장
+                        sharedPreferenceClass.setValue_string("token", token);
                         Toast.makeText(RegisterActivity.this, token, Toast.LENGTH_SHORT).show();
 
                         // 회원가입이 되면 MainActivity로 넘어감.
@@ -185,5 +195,16 @@ public class RegisterActivity extends AppCompatActivity {
             isValid = false;
         }
         return isValid;
+    }
+
+    // 자동 로그인
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences todo_pref = getSharedPreferences("user_todo", MODE_PRIVATE);
+        if(todo_pref.contains("token")) {
+            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            finish();
+        }
     }
 }
