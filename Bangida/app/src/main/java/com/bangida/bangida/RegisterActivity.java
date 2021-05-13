@@ -35,7 +35,7 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     private Button loginBtn, registerBtn;
     private EditText name_ET, email_ET, pw_ET;
-    ProgressBar progressBar;
+    // ProgressBar progressBar;
 
     private String name, email, password;
     UtilService utilService;
@@ -49,11 +49,10 @@ public class RegisterActivity extends AppCompatActivity {
         name_ET = findViewById(R.id.name_ET);
         email_ET = findViewById(R.id.email_ET);
         pw_ET = findViewById(R.id.pw_ET);
-        progressBar = findViewById(R.id.progress_bar);
+        //progressBar = findViewById(R.id.progress_bar);
 
         registerBtn = findViewById(R.id.registerBtn);
         utilService = new UtilService();
-
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,10 +96,10 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this, token, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     }
-                    progressBar.setVisibility(View.GONE);
+                    //progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progressBar.setVisibility(View.GONE);
+                    //progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -114,10 +113,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(RegisterActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
+                        //progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je){
                         je.printStackTrace();
-                        progressBar.setVisibility(View.GONE);
+                        //progressBar.setVisibility(View.GONE);
                     }
                 }
             }
