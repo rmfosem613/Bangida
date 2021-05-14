@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.bangida.bangidaapp.UtilsService.SharedPreferenceClass;
@@ -31,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 프래그먼트 테스트용 버튼
+        Button testFrag = (Button)findViewById(R.id.test_fragment);
+        testFrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myintent = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(myintent);
+                finish();
+            }
+        });
+
 
         sharedPreferenceClass = new SharedPreferenceClass(this);
 
