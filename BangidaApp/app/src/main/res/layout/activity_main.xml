@@ -19,8 +19,13 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/content"
-            >
+            android:id="@+id/content">
+
+            <Button
+                android:id="@+id/test_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
 
         </FrameLayout>
     </LinearLayout>

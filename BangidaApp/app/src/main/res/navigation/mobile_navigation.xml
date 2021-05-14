@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_cal">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.bangida.bangidaapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_cal"
+        android:name="com.bangida.bangidaapp.ui.cal.CalFragment"
+        android:label="@string/title_cal"
+        tools:layout="@layout/fragment_cal" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.bangida.bangidaapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_acbook"
+        android:name="com.bangida.bangidaapp.ui.acbook.AcbookFragment"
+        android:label="@string/title_acbook"
+        tools:layout="@layout/fragment_acbook" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.bangida.bangidaapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_share"
+        android:name="com.bangida.bangidaapp.ui.share.ShareFragment"
+        android:label="@string/title_share"
+        tools:layout="@layout/fragment_share" />
 </navigation>
