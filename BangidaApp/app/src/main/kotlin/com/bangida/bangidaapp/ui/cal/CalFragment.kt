@@ -30,10 +30,10 @@ class CalFragment : Fragment() {
         _binding = FragmentCalBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textCal
+        /*val textView: TextView = binding.textCal
         calViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
-        })
+        })*/
         return root
     }
 
