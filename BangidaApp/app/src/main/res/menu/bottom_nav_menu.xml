@@ -12,7 +12,7 @@
         android:title="@string/title_cal" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_share"
         android:icon="@mipmap/share"
         android:title="@string/title_share" />
 
