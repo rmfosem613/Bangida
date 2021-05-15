@@ -5,8 +5,8 @@
         android:checkableBehavior="single"
         >
         <item
-            android:title="Home"
-            android:id="@+id/action_home"
+            android:title="Room"
+            android:id="@+id/action_room"
             />
         <item
             android:title="Finished Task"

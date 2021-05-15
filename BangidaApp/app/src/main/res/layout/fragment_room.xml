@@ -39,17 +39,4 @@
         android:visibility="gone"
         />
 
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/add_task_btn"
-        app:elevation="20dp"
-        />
 </RelativeLayout>

@@ -34,6 +34,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 동물 정보 생성창으로 이동
+        Button add_task_btn = (Button)findViewById(R.id.add_task_btn);
+        add_task_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WriteAnimalActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         // 프래그먼트 테스트용 버튼
         Button testFrag = (Button)findViewById(R.id.test_fragment);
         testFrag.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // 로그인한 정보 폰에 저장
         sharedPreferenceClass = new SharedPreferenceClass(this);
 
         // MainActivity
@@ -65,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        
+        // 옆에서 서랍처럼 메뉴가 나타나게 하는 함수
         initDrawer();
 
     }
@@ -73,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void initDrawer() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.content, new HomeFragment());
+        ft.replace(R.id.content, new RoomFragment());
         ft.commit();
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
@@ -109,10 +121,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_finished_task:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, new FinishedTaskFragment()).commit();
                 break;
-            case R.id.action_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, new HomeFragment()).commit();
+            case R.id.action_room:
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, new RoomFragment()).commit();
                 break;
             case R.id.action_logout:
+                // 폰에 저장했던 로그인 정보 삭제
                 sharedPreferenceClass.clear();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
