@@ -68,4 +68,24 @@ router.put('/:id', async(req, res, next) =>{
     }   
 });
 
+// 동물 정보 삭제
+// method Delete
+router.delete('/:id', async(req, res, next) =>{
+    try{
+        // var params = req.params;
+        // var post_id = params.id;
+        let animal = await Animal.findById(req.params.id);
+        if(!animal){
+            return res.status(400).json({success: false, msg: "Task does not exist"});
+        }
+        animal = await Animal.findByIdAndDelete(req.params.id);
+        
+        res.status(200).json({success: true, animals: animal ,msg: "Task Successfully deleted"});
+
+    }
+    catch(error){
+        next(error);
+    }
+});
+
 module.exports = router;
