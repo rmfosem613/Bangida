@@ -35,7 +35,7 @@ router.post('/', user_jwt, async (req, res, next) => {
 // method GET
 router.get('/', user_jwt, async (req, res, next) => {
     try{
-        const pet = await Animal.find({user: req.user.id, finished: false});
+        const pet = await Animal.find({user: req.user.id});
 
         if(!pet){
             return res.status(400).json({success: false, msg: "error happened"});
@@ -92,20 +92,4 @@ router.delete('/:id', async(req, res, next) =>{
 
 module.exports = router;
 
-
-
-// fetch all finished task
-router.get('/finished', user_jwt, async(req, res, next) => {
-    try{
-        const pet = await Animal.find({user: req.user.id, finished: false});
-
-        if(!pet){
-            return res.status(400).json({success: false, msg: "error happened"});
-        }
-        res.status(200).json({success: true, count: pet.length, animals: pet, msg: "Successfully fetched"});
-    }
-    catch(error){
-        next(error);
-    }
-});
 

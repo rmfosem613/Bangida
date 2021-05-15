@@ -18,10 +18,6 @@ const animalSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }, 
-    finished: {
-        type: Boolean,
-        default: false
     }
     // petUrl: {
     //     type: String
