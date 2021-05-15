@@ -21,7 +21,7 @@ const animalSchema = new mongoose.Schema({
     }, 
     finished: {
         type: Boolean,
-        required: false
+        default: false
     }
     // petUrl: {
     //     type: String
