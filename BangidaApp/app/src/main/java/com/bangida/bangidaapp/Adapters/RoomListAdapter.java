@@ -55,8 +55,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.MyView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MainActivity2.class);
-                String key = id;
-                intent.putExtra("key", key);
+                intent.putExtra("key", id);
                 context.startActivity(intent);
             }
         });

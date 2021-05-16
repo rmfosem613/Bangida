@@ -20,6 +20,9 @@ class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // room을 선택하면 넘어오는 id 정보 확인
+        Toast.makeText(this@MainActivity2, "room key : "+intent.getStringExtra("key"),Toast.LENGTH_SHORT).show();
+
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
