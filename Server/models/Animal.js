@@ -19,9 +19,6 @@ const animalSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-    // petUrl: {
-    //     type: String
-    // }
 });
 
 module.exports = Animal = mongoose.model('animal',animalSchema);

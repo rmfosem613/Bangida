@@ -1,6 +1,9 @@
 const express = require('express');
 const user_jwt = require("../middleware/user_jwt");
-const Animal = require('../models/Animal')
+const Animal = require('../models/Animal');
+
+// 토큰 만들기
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -8,24 +11,39 @@ const router = express.Router();
 // method POST
 router.post('/', user_jwt, async (req, res, next) => {
     try{
-        const animalInfo = await Animal.create({
+        let animals = await Animal.create({
             petname: req.body.petname, 
             breed: req.body.breed,
             birth: req.body.birth, 
             etc: req.body.etc,
             user: req.user.id});
 
-        if(!animalInfo){
+        if(!animals){
             return res.status(400).json({
                 success: false,
                 msg: "Something went wrong"
             });
         }
-        res.status(200).json({
-            success: true,
-            animal: animalInfo,
-            msg: 'Successfully created'
+
+        const payload = {
+            animals: {
+                id: animals.id
+            }
+        }
+
+        jwt.sign(payload, process.env.jwtPetSecret, {
+            expiresIn: 360000
+        }, (err, token) => {
+            if (err) throw err;
+
+            res.status(200).json({
+                success: true,
+                animals: animals,
+                token: token,
+                msg: 'Successfully created'
+            });
         });
+
     } catch(error){
         next(error);
     }

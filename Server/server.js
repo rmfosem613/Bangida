@@ -20,7 +20,9 @@ connectDB();
 // https://bangidaapp.herokuapp.com/api/bangida/auth/register
 app.use('/api/bangida/auth', require('./routes/user'));
 
-app.use('/api/animal',require('./routes/animal'))
+app.use('/api/animal',require('./routes/animal'));
+
+app.use('/api/calendar',require('./routes/calendar'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, 
