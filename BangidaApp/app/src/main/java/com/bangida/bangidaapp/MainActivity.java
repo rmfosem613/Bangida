@@ -47,17 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 프래그먼트 테스트용 버튼
-        Button testFrag = (Button)findViewById(R.id.test_fragment);
-        testFrag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myintent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(myintent);
-                finish();
-            }
-        });
-
         // 로그인한 정보 폰에 저장
         sharedPreferenceClass = new SharedPreferenceClass(this);
 
