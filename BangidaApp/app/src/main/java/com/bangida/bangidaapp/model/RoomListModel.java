@@ -15,4 +15,5 @@ public class RoomListModel {
     public String getPetname() {
         return petname;
     }
+
 }
