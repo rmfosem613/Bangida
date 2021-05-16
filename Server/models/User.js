@@ -5,11 +5,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-/*
-    avatar: {
-        type: Sting
-    },
-*/
     email: {
         type: String,
         required: true

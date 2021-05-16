@@ -10,7 +10,7 @@ router.post('/', pet_jwt, async (req, res, next) => {
     try{
         const calPlan = await Calendar.create({
             cdate: req.body.cdate,
-            cpaln: req.body.cplan,
+            sche: req.body.sche,
             animals: req.animals.id
             // pcheck: req.body.pcheck
         });
@@ -23,7 +23,7 @@ router.post('/', pet_jwt, async (req, res, next) => {
         }
         res.status(200).json({
             success: true,
-            animals: calPlan,
+            plan: calPlan,
             msg: 'Successfully created'
         });
     } catch(error){

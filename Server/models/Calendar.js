@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 const calendarSchema = new mongoose.Schema({
     cdate: {
-        type: String
+        type: String,
+        require: true
     },
-    cplan: {
-        type: String
+    sche:  {
+        type: String,
+        require: true
     },
     pcheck: {
         type: Boolean,
