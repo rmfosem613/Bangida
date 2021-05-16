@@ -14,12 +14,14 @@
         android:layout_height="80dp"
         android:background="@drawable/room_list_bg"
         android:padding="10dp">
+
+
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:src="@drawable/ic_arrow"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             />
@@ -40,56 +42,19 @@
             android:textStyle="bold"
             />
 
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/accordian_body"
-        android:padding="5dp"
-        android:background="@drawable/room_list_bg"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="78dp">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/member_count"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="80dp"
             android:textColor="#2d2d2d"
             android:text="참여인원 : 2"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:id="@+id/deleteBtn"
-            android:layout_toLeftOf="@+id/member_count"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            android:layout_toLeftOf="@+id/deleteBtn"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/editBtn"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_done"
-            android:layout_toLeftOf="@+id/editBtn"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/doneBtn"
-            />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

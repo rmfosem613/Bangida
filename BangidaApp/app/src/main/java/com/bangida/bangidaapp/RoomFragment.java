@@ -71,6 +71,7 @@ public class RoomFragment extends Fragment {
 
         getTasks();
 
+
         return view;
     }
 
@@ -106,6 +107,7 @@ public class RoomFragment extends Fragment {
 
                        roomListAdapter = new RoomListAdapter(getActivity(), arrayList);
                        recyclerView.setAdapter(roomListAdapter);
+
                     }
                     progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) { // 예외 : 정상적인 처리를 벗어나는 경우
