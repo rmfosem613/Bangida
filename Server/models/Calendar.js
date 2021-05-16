@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const calendarSchema = new mongoose.Schema({
     cdate: {
-        type: Date,
-        default: Date.now
+        type: String
     },
     cplan: {
         type: String
