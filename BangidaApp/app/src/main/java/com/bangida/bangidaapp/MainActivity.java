@@ -109,9 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setDrawerClick(int itemId) {
         switch (itemId) {
-            case R.id.action_finished_task:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, new FinishedTaskFragment()).commit();
-                break;
             case R.id.action_room:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, new RoomFragment()).commit();
                 break;

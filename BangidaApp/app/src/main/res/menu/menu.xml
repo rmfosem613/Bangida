@@ -9,10 +9,6 @@
             android:id="@+id/action_room"
             />
         <item
-            android:title="Finished Task"
-            android:id="@+id/action_finished_task"
-            />
-        <item
             android:title="로그아웃"
             android:id="@+id/action_logout"
             />
