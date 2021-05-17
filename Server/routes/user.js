@@ -44,14 +44,13 @@ router.post('/register', async (req, res, next) => {
         const salt = await bcryptjs.genSalt(10);
         user.password = await bcryptjs.hash(password, salt);
 
-        // let size = 200;
-        // user.avatar = "https://gravatar.com/avatar/?s="+size+'&d=retro';
-        
         await user.save();
 
         const payload = {
             user: {
-                id: user.id
+                id: user.id,
+                username: user.username,
+                email: user.email
             }
         }
 
@@ -100,7 +99,9 @@ router.post('/login', async(req, res, next) => {
 
         const payload = {
             user: {
-                id: user.id
+                id: user.id,
+                username: user.username,
+                email:user.email
             }
         }
 
