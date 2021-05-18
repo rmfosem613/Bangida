@@ -25,20 +25,19 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="18dp"
         android:textSize="20sp"
-        android:id="@+id/username"
+        android:id="@+id/username_menu"
         android:textStyle="bold"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/username"
+        android:layout_below="@+id/username_menu"
         android:text="bangida@gmail.com"
         android:textColor="@color/white"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="18dp"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:id="@+id/user_email"
         />
 
 
