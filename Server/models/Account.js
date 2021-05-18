@@ -15,9 +15,9 @@ const accountSchema = new mongoose.Schema({
     // etc: {
     //     type: String
     // },
-    animals: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Animal'
+        ref: 'User'
     }
 });
 

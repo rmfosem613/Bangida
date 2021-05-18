@@ -1,18 +1,18 @@
 const express = require('express');
-const pet_jwt = require("../middleware/pet_jwt");
+const user_jwt = require("../middleware/user_jwt");
 const Account = require('../models/Account');
 
 const router = express.Router();
 
 // 일정 입력
 // method POST
-router.post('/', pet_jwt, async (req, res, next) => {
+router.post('/', user_jwt, async (req, res, next) => {
     try{
         const account = await Account.create({
             acdate: req.body.acdate,
             accontent: req.body.accontent,
             acprice: req.body.acprice,
-            animals: req.animals.id
+            user: req.user.id
         });
 
         if(!account){
@@ -33,9 +33,9 @@ router.post('/', pet_jwt, async (req, res, next) => {
 
 // 모든 일정 받아오기
 // method GET
-router.get('/', pet_jwt, async (req, res, next) => {
+router.get('/', user_jwt, async (req, res, next) => {
     try{
-        const account = await Account.find({animals: req.animals.id});
+        const account = await Account.find({user: req.user.id});
 
         if(!account){
             return res.status(400).json({success: false, msg: "error happened"});

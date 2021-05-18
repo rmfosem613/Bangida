@@ -24,25 +24,7 @@ router.post('/', user_jwt, async (req, res, next) => {
                 msg: "Something went wrong"
             });
         }
-
-        const payload = {
-            animals: {
-                id: animals.id
-            }
-        }
-
-        jwt.sign(payload, process.env.jwtPetSecret, {
-            expiresIn: 360000
-        }, (err, token) => {
-            if (err) throw err;
-
-            res.status(200).json({
-                success: true,
-                animals: animals,
-                token: token,
-                msg: 'Successfully created'
-            });
-        });
+        res.status(200).json({success: true, animals: animals, msg: 'Successfully created'});
 
     } catch(error){
         next(error);
@@ -53,12 +35,14 @@ router.post('/', user_jwt, async (req, res, next) => {
 // method GET
 router.get('/', user_jwt, async (req, res, next) => {
     try{
+        // 요청
         const pet = await Animal.find({user: req.user.id});
 
         if(!pet){
             return res.status(400).json({success: false, msg: "error happened"});
         }
         res.status(200).json({success: true, count: pet.length, animals: pet, msg: "Successfully fetched"});
+        
     }
     catch(error){
         next(error);

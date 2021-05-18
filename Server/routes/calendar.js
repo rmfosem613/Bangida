@@ -1,17 +1,17 @@
 const express = require('express');
-const pet_jwt = require("../middleware/pet_jwt");
+const user_jwt = require("../middleware/user_jwt");
 const Calendar = require('../models/Calendar');
 
 const router = express.Router();
 
 // 일정 입력
 // method POST
-router.post('/', pet_jwt, async (req, res, next) => {
+router.post('/', user_jwt, async (req, res, next) => {
     try{
         const calPlan = await Calendar.create({
             cdate: req.body.cdate,
             sche: req.body.sche,
-            animals: req.animals.id
+            user: req.user.id
             // pcheck: req.body.pcheck
         });
 
@@ -33,9 +33,9 @@ router.post('/', pet_jwt, async (req, res, next) => {
 
 // 모든 일정 받아오기
 // method GET
-router.get('/', pet_jwt, async (req, res, next) => {
+router.get('/', user_jwt, async (req, res, next) => {
     try{
-        const cal = await Calendar.find({animals: req.animals.id});
+        const cal = await Calendar.find({user: req.user.id});
 
         if(!cal){
             return res.status(400).json({success: false, msg: "error happened"});

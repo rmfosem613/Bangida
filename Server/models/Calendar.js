@@ -13,9 +13,9 @@ const calendarSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    animals: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Animal'
+        ref: 'User'
     }
 });
 
