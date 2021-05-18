@@ -9,4 +9,7 @@
     <string name="title_acbook">가계부</string>
     <string name="title_cal">캘린더</string>
     <string name="title_share">공유</string>
+    <string name="schedule">일정</string>
+    <string name="blank"> </string>
+    <string name="todo">할 일</string>
 </resources>
