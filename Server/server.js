@@ -18,11 +18,15 @@ dotenv.config({
 connectDB();
 
 // https://bangidaapp.herokuapp.com/api/bangida/auth/register
+
+// 사용자 정보
 app.use('/api/bangida/auth', require('./routes/user'));
-
+// 동물 정보
 app.use('/api/animal',require('./routes/animal'));
-
+// 달력 일정
 app.use('/api/calendar',require('./routes/calendar'));
+// 가계부 정보
+app.use('/api/account',require('./routes/account'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, 
