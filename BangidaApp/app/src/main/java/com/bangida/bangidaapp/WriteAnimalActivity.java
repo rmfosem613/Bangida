@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,9 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bangida.bangidaapp.UtilsService.SharedPreferenceClass;
+import com.bangida.bangidaapp.model.RoomListModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +40,7 @@ public class WriteAnimalActivity extends AppCompatActivity {
 
     private EditText petname_ET,breed_ET, etc_ET;
     private Button add_task_btn;
-    SharedPreferenceClass sharedPreferenceClass;
+    SharedPreferenceClass sharedPreferenceClass, animalsharedPreferenceClass;
     String token;
 
     // private NumberPicker birth_y, birth_m, birth_d;
@@ -97,6 +100,8 @@ public class WriteAnimalActivity extends AppCompatActivity {
         sharedPreferenceClass = new SharedPreferenceClass(this);
         token = sharedPreferenceClass.getValue_string("token");
 
+        animalsharedPreferenceClass = new SharedPreferenceClass(this);
+
         add_task_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,8 +139,11 @@ public class WriteAnimalActivity extends AppCompatActivity {
                 try {
                     // success는 변수이름이고, boolean값인 true | false 값을 가짐.
                     if(response.getBoolean("success")) {
+
                         Toast.makeText(WriteAnimalActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
+
                         startActivity(new Intent(WriteAnimalActivity.this, MainActivity.class));
+
                     }
                 } catch (JSONException e) { // 예외 : 정상적인 처리를 벗어나는 경우
                     e.printStackTrace(); // getMessage, toSting과 다르게 리턴값이 없음.
