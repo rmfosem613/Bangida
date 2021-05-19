@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/consumptionbook_page"
     android:paddingTop="?attr/actionBarSize"
     tools:context=".ui.acbook.AcbookFragment">
 
@@ -24,9 +25,9 @@
         android:id="@+id/tv_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
         android:text="@string/오월"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/rarrow"
         app:layout_constraintHorizontal_bias="0.498"
@@ -49,9 +50,9 @@
         android:id="@+id/add_ac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="15dp"
         android:contentDescription="@string/blank"
         android:src="@mipmap/add"
         app:backgroundTint="#00000000"
@@ -59,135 +60,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_month" />
 
     <TextView
-        android:id="@+id/tv_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="190dp"
-        android:layout_marginLeft="190dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="2dp"
-        android:gravity="center"
-        android:text="@string/total"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@id/view3"
-        app:layout_constraintStart_toEndOf="@+id/add_ac"
-        app:layout_constraintTop_toBottomOf="@+id/tv_month" />
-
-    <TextView
         android:id="@+id/tv_totalnum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
         android:layout_marginTop="52dp"
         android:gravity="center"
         android:text="@string/blank"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toEndOf="@+id/tv_total"
         app:layout_constraintTop_toBottomOf="@+id/tv_month" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_ac" />
-
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="@string/date"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/view2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <TextView
-        android:id="@+id/tv_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:text="@string/item"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <TextView
-        android:id="@+id/tv_cost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:gravity="center"
-        android:text="@string/cost"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="93dp"
-        android:layout_marginLeft="93dp"
-        android:layout_marginTop="125dp"
-        android:layout_marginBottom="555dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/view4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/larrow" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginRight="93dp"
-        android:layout_marginBottom="555dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/view4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rarrow" />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_item" />
 
 
 
