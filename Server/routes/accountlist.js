@@ -1,6 +1,6 @@
 const express = require('express');
 const user_jwt = require("../middleware/user_jwt");
-const Calendar = require('../models/Calendar');
+const AccountList = require('../models/AccountList');
 
 const router = express.Router();
 
@@ -8,14 +8,12 @@ const router = express.Router();
 // method POST
 router.post('/', user_jwt, async (req, res, next) => {
     try{
-        const calPlan = await Calendar.create({
-            cdate: req.body.cdate,
-            sche: req.body.sche,
+        const acclist = await AccountList.create({
+            alcontent: req.body.alcontent,
             user: req.user.id
-            // pcheck: req.body.pcheck
         });
 
-        if(!calPlan){
+        if(!acclist){
             return res.status(400).json({
                 success: false,
                 msg: "Something went wrong"
@@ -23,7 +21,7 @@ router.post('/', user_jwt, async (req, res, next) => {
         }
         res.status(200).json({
             success: true,
-            plan: calPlan,
+            contents: acclist,
             msg: 'Successfully created'
         });
     } catch(error){
@@ -35,12 +33,12 @@ router.post('/', user_jwt, async (req, res, next) => {
 // method GET
 router.get('/', user_jwt, async (req, res, next) => {
     try{
-        const cal = await Calendar.find({user: req.user.id});
+        const acclist = await AccountList.find({user: req.user.id});
 
-        if(!cal){
+        if(!acclist){
             return res.status(400).json({success: false, msg: "error happened"});
         }
-        res.status(200).json({success: true, count: cal.length, plans: cal, msg: "Successfully fetched"});
+        res.status(200).json({success: true, count: acclist.length, contents: acclist, msg: "Successfully fetched"});
     }
     catch(error){
         next(error);
@@ -55,16 +53,16 @@ router.put('/:id', async(req, res, next) =>{
     try{
         // var params = req.params;
         // var post_id = params.id;
-        let cal = await Calendar.findById(req.params.id);
-        if(!cal){
+        let acclist = await AccountList.findById(req.params.id);
+        if(!acclist){
             return res.status(400).json({success: false, msg: "Task does not exist"});
         }
-        cal = await Calendar.findByIdAndUpdate(req.params.id, req.body, {
+        acclist = await AccountList.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
         });
 
-        res.status(200).json({success: true, plans: cal ,msg: "Successfully updated"});
+        res.status(200).json({success: true, contents: acclist ,msg: "Successfully updated"});
 
     }
     catch(error){
@@ -79,13 +77,13 @@ router.delete('/:id', async(req, res, next) =>{
     try{
         // var params = req.params;
         // var post_id = params.id;
-        let cal = await Calendar.findById(req.params.id);
-        if(!cal){
+        let acclist = await AccountList.findById(req.params.id);
+        if(!acclist){
             return res.status(400).json({success: false, msg: "Task does not exist"});
         }
-        cal = await Calendar.findByIdAndDelete(req.params.id);
+        acclist = await AccountList.findByIdAndDelete(req.params.id);
         
-        res.status(200).json({success: true, plans: cal ,msg: "Task Successfully deleted"});
+        res.status(200).json({success: true, contents: acclist ,msg: "Task Successfully deleted"});
 
     }
     catch(error){

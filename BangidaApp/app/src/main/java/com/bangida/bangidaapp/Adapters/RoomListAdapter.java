@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bangida.bangidaapp.MainActivity2;
 import com.bangida.bangidaapp.R;
 import com.bangida.bangidaapp.model.RoomListModel;
-import com.bangida.bangidaapp.ui.cal.CalFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,6 +48,8 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.MyView
         final String petname = roomList.get(position).getPetname();
         final String id = roomList.get(position).getId();
 
+
+        // 룸 리스트로 db에서 받아온 동물 이름 리스트뷰에 생성된 아이템 제목으로 넣음.
         holder.petnameTv.setText(petname);
 
         holder.arrow.setOnClickListener(new View.OnClickListener() {

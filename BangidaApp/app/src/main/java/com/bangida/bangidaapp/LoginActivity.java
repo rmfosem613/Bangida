@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         // token정보 : success, token, user(_id, username, email)값
                         String token = response.getString("token");
+                        // String username = response.getString("username");
 
                         // token 정보를 폰에 저장
                         sharedPreferenceClass.setValue_string("token", token);
@@ -173,6 +174,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // EditText 확인
+    // 시간이 되면 email 표준을 잘 지켰는지에 대한 코드를 추가하면 좋을듯
     public boolean validate(View view) {
         boolean isValid;
         

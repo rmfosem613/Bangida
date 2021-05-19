@@ -6,10 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bangida.bangidaapp.Adapters.RoomListAdapter;
 import com.bangida.bangidaapp.UtilsService.SharedPreferenceClass;
-import com.bangida.bangidaapp.model.AnimalModel;
 import com.bangida.bangidaapp.model.RoomListModel;
 
 import org.json.JSONArray;
@@ -47,6 +47,9 @@ public class RoomFragment extends Fragment {
     ProgressBar progressBar;
     RoomListAdapter roomListAdapter;
     ArrayList<RoomListModel> arrayList;
+
+    Button user_btn;
+
 
     SharedPreferenceClass sharedPreferenceClass;
     String token;
@@ -71,13 +74,14 @@ public class RoomFragment extends Fragment {
 
         getTasks();
 
-
         return view;
     }
+
 
     // 동물 정보 가져오기
     public void getTasks() {
         arrayList = new ArrayList<>();
+
         progressBar.setVisibility(View.VISIBLE);
         String url = "https://bangidaapp.herokuapp.com/api/animal";
 

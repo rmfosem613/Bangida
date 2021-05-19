@@ -27,6 +27,8 @@ app.use('/api/animal',require('./routes/animal'));
 app.use('/api/calendar',require('./routes/calendar'));
 // 가계부 정보
 app.use('/api/account',require('./routes/account'));
+// 가계부 체크 리스트 정보
+app.use('/api/accountlist',require('./routes/accountlist'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, 

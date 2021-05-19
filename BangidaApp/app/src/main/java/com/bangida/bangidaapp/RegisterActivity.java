@@ -112,7 +112,6 @@ public class RegisterActivity extends AppCompatActivity {
                         // token정보 : success, token, user(_id, username, email)값
                         String token = response.getString("token");
 
-                        // token 정보를 폰에 저장
                         sharedPreferenceClass.setValue_string("token", token);
                         Toast.makeText(RegisterActivity.this, token, Toast.LENGTH_SHORT).show();
 
