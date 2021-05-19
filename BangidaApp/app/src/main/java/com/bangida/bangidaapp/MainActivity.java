@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 받은 토큰을 복사해 봐서 입력하기 위한 dialog 생성
         receive_token.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         initDrawer();
     }
 
+    // 초대받은 token을 입력하기 위한 dialog 함수
     private void putShareTokenDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.custom_share_token, null);
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // 입장 버튼을 누르면 초대받은 방 생성
     private void updateToken(String rtoken) {
         sharedPreferenceClass.clear();
         String token = rtoken;
