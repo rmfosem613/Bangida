@@ -1,5 +1,6 @@
 package com.bangida.bangidaapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,10 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AlertDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -29,7 +31,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bangida.bangidaapp.Adapters.RoomListAdapter;
 import com.bangida.bangidaapp.UtilsService.SharedPreferenceClass;
-import com.bangida.bangidaapp.model.RoomListModel;
+import com.bangida.bangidaapp.interfaces.RecyclerViewClickListener;
+import com.bangida.bangidaapp.model.AnimalModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,16 +43,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RoomFragment extends Fragment {
+// 처음에는 수정, 삭제 버튼이 안보였다가 roomitem을 누르면 반응하게 해주기 위해 recyclerviewclicklister
+public class RoomFragment extends Fragment implements RecyclerViewClickListener {
 
     RecyclerView recyclerView;
     TextView empty_tv;
     ProgressBar progressBar;
     RoomListAdapter roomListAdapter;
-    ArrayList<RoomListModel> arrayList;
-
-    Button user_btn;
-
+    ArrayList<AnimalModel> arrayList;
 
     SharedPreferenceClass sharedPreferenceClass;
     String token;
@@ -77,6 +78,152 @@ public class RoomFragment extends Fragment {
         return view;
     }
 
+    // 동물 정보 수정을 위한 dialog 생성
+    public void showUpdateDialog(final  String  id, String petname, String breed, String etc)  {
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.custom_dialog_layout, null);
+
+        final EditText petname_field = alertLayout.findViewById(R.id.petname);
+        final EditText breed_field = alertLayout.findViewById(R.id.breed);
+        final EditText etc_field = alertLayout.findViewById(R.id.etc);
+
+        petname_field.setText(petname);
+        breed_field.setText(breed);
+        etc_field.setText(etc);
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(alertLayout)
+                .setTitle("동물 정보 수정하기")
+                .setPositiveButton("수정", null)
+                .setNegativeButton("취소", null)
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button button = ((AlertDialog)alertDialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String petname = petname_field.getText().toString();
+                        String breed = breed_field.getText().toString();
+                        String etc = etc_field.getText().toString();
+
+                        updateTask(id, petname, breed, etc);
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    // 동물 정보 삭제
+    public void showDeleteDialog(final String id, final  int position) {
+        final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setTitle("동물 정보를 삭제하시겠습니까?")
+                .setPositiveButton("네", null)
+                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getTasks();
+                    }
+                })
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button button = ((AlertDialog)alertDialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteAnimal(id, position);
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    // put 방식
+    // 동물 정보 수정을 위해 서버랑 통신
+    private void updateTask(String id, String petname, String breed, String etc) {
+        // 게시글의 id를 추가해서 url을 보내줌 (판별하기 위해)
+        String url = "https://bangidaapp.herokuapp.com/api/animal/"+id;
+        HashMap<String, String> body = new HashMap<>();
+        body.put("petname", petname);
+        body.put("breed", breed);
+        body.put("etc", etc);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(body),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if(response.getBoolean("success")) {
+                                getTasks();
+                                Toast.makeText(getActivity(), response.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", token);
+                return params;
+            }
+        };
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    // delete 방식
+    // 동물 정보 삭제를 위해 서버와 통신
+    private void deleteAnimal(String id, int position) {
+        String url = "https://bangidaapp.herokuapp.com/api/animal/"+id;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null
+                , new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if(response.getBoolean("success")) {
+                        Toast.makeText(getActivity(), response.getString("msg"), Toast.LENGTH_SHORT).show();
+                        arrayList.remove(position);
+                        roomListAdapter.notifyItemRemoved(position);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonObjectRequest);
+    }
 
     // 동물 정보 가져오기
     public void getTasks() {
@@ -100,18 +247,19 @@ public class RoomFragment extends Fragment {
                        for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                            RoomListModel roomListModel = new RoomListModel(
+                            AnimalModel animalModel = new AnimalModel(
                                     jsonObject.getString("_id"),
-                                    jsonObject.getString("petname")
+                                    jsonObject.getString("petname"),
+                                    jsonObject.getString("breed"),
+                                    jsonObject.getString("etc")
                                     // 방 인원수 세는 거 추가하기
                             );
 
-                            arrayList.add(roomListModel);
+                            arrayList.add(animalModel);
                         }
 
-                       roomListAdapter = new RoomListAdapter(getActivity(), arrayList);
+                       roomListAdapter = new RoomListAdapter(getActivity(), arrayList, RoomFragment.this);
                        recyclerView.setAdapter(roomListAdapter);
-
                     }
                     progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) { // 예외 : 정상적인 처리를 벗어나는 경우
@@ -169,5 +317,28 @@ public class RoomFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         // 데이터를 파싱.
         requestQueue.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(getActivity(), "Position "+ position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLongItemClick(int position) {
+        showUpdateDialog(arrayList.get(position).getId(), arrayList.get(position).getPetname(), arrayList.get(position).getBreed(), arrayList.get(position).getEtc());
+        Toast.makeText(getActivity(), "Position "+ position, Toast.LENGTH_SHORT).show();
+    }
+
+    // 수정을 위해 postion(배열에서 위치한 index값), id(room id), petname, breed, etc 값 넘겨줌
+    @Override
+    public void onEditButtonClick(int position) {
+        showUpdateDialog(arrayList.get(position).getId(), arrayList.get(position).getPetname(), arrayList.get(position).getBreed(), arrayList.get(position).getEtc());
+    }
+
+    // 삭제를 위해 adapter에 postion, id 값 넘겨줌
+    @Override
+    public void onDeleteButtonClick(int position) {
+        showDeleteDialog(arrayList.get(position).getId(), position);
     }
 }
