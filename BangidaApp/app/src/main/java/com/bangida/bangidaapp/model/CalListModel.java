@@ -1,21 +1,13 @@
 package com.bangida.bangidaapp.model;
 
 public class CalListModel {
+    private String  cdate, sche;
     private Boolean pcheck;
-    private String animals, cdate, sche;
 
-    public CalListModel(Boolean pcheck, String animals, String cdate, String sche) {
-        this.pcheck = pcheck;
-        this.animals = animals;
+    public CalListModel( String cdate, String sche, Boolean pcheck) {
         this.cdate = cdate;
         this.sche = sche;
-    }
-    public Boolean getPcheck() {
-        return pcheck;
-    }
-
-    public String getAnimals() {
-        return animals;
+        this.pcheck = pcheck;
     }
 
     public String getCdate() {
@@ -24,6 +16,10 @@ public class CalListModel {
 
     public String getSche() {
         return sche;
+    }
+
+    public Boolean getPcheck() {
+        return pcheck;
     }
 
 }

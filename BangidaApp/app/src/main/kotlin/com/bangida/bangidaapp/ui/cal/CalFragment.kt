@@ -3,6 +3,7 @@ package com.bangida.bangidaapp.ui.cal
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.bangida.bangidaapp.R
 import com.bangida.bangidaapp.UtilsService.SharedPreferenceClass
 import com.bangida.bangidaapp.databinding.FragmentCalBinding
 import com.bangida.bangidaapp.model.CalListModel
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
@@ -116,7 +118,7 @@ class CalFragment : Fragment() {
     var token: String = ""
 
     var calListAdapter: CalendarAdapter? = null
-    var arrayList: ArrayList<CalListModel> = ArrayList<CalListModel>()
+    var arrayList: ArrayList<CalListModel>? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -135,6 +137,11 @@ class CalFragment : Fragment() {
 
         sharedPreferenceClass = SharedPreferenceClass(requireActivity())
         token = sharedPreferenceClass!!.getValue_string("token")
+
+        binding.addBtn.visibility = View.INVISIBLE
+        binding.TextView.visibility = View.INVISIBLE
+        binding.view.visibility = View.INVISIBLE
+        binding.view2.visibility = View.INVISIBLE
 
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth -> // 달력 날짜가 선택되면
             checkedDay(year, month, dayOfMonth) // checkedDay 메소드 호출
@@ -176,9 +183,12 @@ class CalFragment : Fragment() {
     }
 
     fun checkedDay(cYear: Int, cMonth: Int, cDay: Int){
+        binding.addBtn.visibility = View.VISIBLE
+        binding.TextView.visibility = View.VISIBLE
+        binding.view.visibility = View.VISIBLE
+        binding.view2.visibility = View.VISIBLE
         cdate = ""+cYear+"-"+(cMonth+1)+""+"-"+cDay+""
         Toast.makeText(activity, cdate, Toast.LENGTH_SHORT).show()
-
         try {
             getTodo()
         }catch (e: Exception){
@@ -200,6 +210,7 @@ class CalFragment : Fragment() {
                     // success는 변수이름이고, boolean값인 true | false 값을 가짐.
                     if(response.getBoolean("success")){
                         Toast.makeText(requireActivity(), "Added Successfully", Toast.LENGTH_SHORT).show()
+                        getTodo()
                     }
                 } catch (e: JSONException){  // 예외 : 정상적인 처리를 벗어나는 경우
                     e.printStackTrace() // getMessage, toString과 다르게 리턴값이 없음.
@@ -250,39 +261,45 @@ class CalFragment : Fragment() {
         requestQueue.add<JSONObject>(jsonObjectRequest)
     }
 
-    fun getTodo(){
-        val url = "https://bangidaapp.herokuapp.com/api/calendar"
+    @SuppressLint("WrongConstant")
+    private fun getTodo(){
+        arrayList = ArrayList()
+        var url = "https://bangidaapp.herokuapp.com/api/calendar"
+
 
         // Get 방식으로 데이터를 요청
-        var jsonObjectRequest = object: JsonObjectRequest(Request.Method.GET, url, null,
-            { response ->
+        val jsonObjectRequest = object: JsonObjectRequest(
+            Request.Method.GET, url, null,
+            Response.Listener { response ->
                 try{
                     // success는 변수이름이고, boolean값인 true | false 값을 가짐.
                     if(response.getBoolean("success")){
-                        var jsonArray = response.getJSONArray("calendars")
+                        val jsonArray :JSONArray = response.getJSONArray("plans")
 
+                        Log.d("태그", "gettodo")
                         // 사용자가 작성한 캘린더 정보 출력하기
                         for (index in 0 until jsonArray.length()){
-                            var jsonObject = jsonArray.getJSONObject(index)
+                            var jsonObject :JSONObject = jsonArray.getJSONObject(index)
 
                             var calListModel = CalListModel(
-                                jsonObject.getBoolean("pcheck"),
-                                jsonObject.getString("animals"),
                                 jsonObject.getString("cdate"),
-                                jsonObject.getString("sche")
+                                jsonObject.getString("sche"),
+                                jsonObject.getBoolean("pcheck")
                             )
                             if(calListModel.cdate==cdate){
-                                arrayList.add(calListModel)
+                                arrayList?.add(calListModel)
                             }
                         }
-                        calListAdapter = CalendarAdapter(arrayList)
+                        Log.d("태그", "arraylist: "+arrayList)
+
+                        calListAdapter = CalendarAdapter(arrayList!!)
                         binding.calrecycler.adapter = calListAdapter
                     }
                 } catch (e: JSONException){  // 예외 : 정상적인 처리를 벗어나는 경우
                     e.printStackTrace() // getMessage, toString과 다르게 리턴값이 없음.
                 }
             },
-            { error ->
+            Response.ErrorListener { error ->
                 Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show()
                 val response = error.networkResponse
                 // instanceof : 객체타입을 확인

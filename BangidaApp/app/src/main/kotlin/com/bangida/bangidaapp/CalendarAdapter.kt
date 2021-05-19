@@ -14,18 +14,29 @@ class CalendarViewHolder(v: View): RecyclerView.ViewHolder(v) {
 }
 
 class CalendarAdapter(val calList:ArrayList<CalListModel>) : RecyclerView.Adapter<CalendarViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val cellForRow = LayoutInflater.from(parent.context).inflate(R.layout.cal_item_recycler, parent, false)
         return CalendarViewHolder(cellForRow)
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
+        val ctodo = holder.todo
         val sche: String = calList.get(position).sche
+        var pcheck: Boolean = calList.get(position).pcheck
 
-        holder.todo.setText(sche)
+        ctodo.isChecked = pcheck
+        ctodo.setText(sche)
+
+        /*ctodo.setOnClickListener {
+            pcheck = ctodo.isChecked
+            notifyItemChanged(position)
+        }*/
     }
 
     override fun getItemCount() = calList.size
 }
+
+
 
 

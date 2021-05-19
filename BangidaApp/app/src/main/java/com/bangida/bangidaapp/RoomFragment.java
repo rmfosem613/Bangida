@@ -81,6 +81,8 @@ public class RoomFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         String url = "https://bangidaapp.herokuapp.com/api/animal";
 
+
+
         // Get 방식으로 데이터를 요청
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
