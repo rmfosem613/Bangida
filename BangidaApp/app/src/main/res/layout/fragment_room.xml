@@ -35,4 +35,12 @@
         android:visibility="gone"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="150dp"
+        android:text="공유하기"
+        android:id="@+id/share_test"/>
+
 </RelativeLayout>

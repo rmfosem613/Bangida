@@ -5,7 +5,7 @@
         android:checkableBehavior="single"
         >
         <item
-            android:title="Room"
+            android:title="새로고침"
             android:id="@+id/action_room"
             />
         <item

@@ -16,44 +16,22 @@
 
         <include layout="@layout/app_bar_layout" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:text="안녕하세요!  "/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/purple_500"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:text="사용자 이름"
-                android:id="@+id/username_test"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:text="님"/>
-
-        </LinearLayout>
-
         <Button
             android:id="@+id/add_task_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="동물 정보 생성" />
 
-
+        <Button
+            android:id="@+id/receive_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="초대 토큰 입력하기" />
 
         <FrameLayout
             android:layout_width="match_parent"
