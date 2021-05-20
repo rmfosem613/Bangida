@@ -8,7 +8,6 @@ import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.bangida.bangidaapp.model.CalListModel
 
-
 class CalendarAdapter( val context: Context, val calList:ArrayList<CalListModel>) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
@@ -17,15 +16,18 @@ class CalendarAdapter( val context: Context, val calList:ArrayList<CalListModel>
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        val ctodo = holder.todo
+        var ctodo = holder.todo
         val sche: String = calList.get(position).sche
         var pcheck: Boolean = calList.get(position).pcheck
         ctodo.isChecked = pcheck
         ctodo.setText(sche)
 
+        ctodo.setOnClickListener {
+            checkClickListener?.onClick(it, position, ctodo.isChecked)
+        }
+
         holder.itemView.setOnClickListener{
             itemClickListener?.onClick(it,position)
-
         }
     }
 
@@ -37,10 +39,20 @@ class CalendarAdapter( val context: Context, val calList:ArrayList<CalListModel>
         fun onClick(view: View,position: Int)
     }
 
-    //클릭 리스너
+    interface CheckClickListener{
+        fun onClick(view: View,position: Int, pcheck:Boolean)
+    }
+
+    //아이템 클릭 리스너
     private var itemClickListener: ItemClickListener? = null
     fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
+    }
+
+    //체크 박스 클릭 리스너
+    private var checkClickListener: CheckClickListener? = null
+    fun setCheckClickListener(checkClickListener: CheckClickListener) {
+        this.checkClickListener = checkClickListener
     }
 
     override fun getItemCount() = calList.size
