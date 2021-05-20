@@ -26,12 +26,14 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.MyView
     ArrayList<AnimalModel> roomList;
     Context context;
     final private RecyclerViewClickListener clickListener;
+
     public RoomListAdapter(Context context, ArrayList<AnimalModel> roomList, RecyclerViewClickListener clickListener) {
         this.roomList = roomList;
         this.context = context;
         this.clickListener = clickListener;
 
     }
+
 
     @NonNull
     @NotNull

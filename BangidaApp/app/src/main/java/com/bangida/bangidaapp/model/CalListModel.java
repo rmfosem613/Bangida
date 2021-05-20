@@ -1,13 +1,18 @@
 package com.bangida.bangidaapp.model;
 
 public class CalListModel {
-    private String  cdate, sche;
+    private String  cdate, sche, id;
     private Boolean pcheck;
 
-    public CalListModel( String cdate, String sche, Boolean pcheck) {
+    public CalListModel( String id, String cdate, String sche, Boolean pcheck) {
+        this.id = id;
         this.cdate = cdate;
         this.sche = sche;
         this.pcheck = pcheck;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getCdate() {
