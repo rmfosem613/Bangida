@@ -116,9 +116,9 @@ class CalFragment : Fragment() {
     var cdate: String = ""
     var sharedPreferenceClass: SharedPreferenceClass? = null
     var token: String = ""
-
-    var calListAdapter: CalendarAdapter? = null
     var arrayList: ArrayList<CalListModel>? = null
+    var calListAdapter: CalendarAdapter? = null
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -138,10 +138,13 @@ class CalFragment : Fragment() {
         sharedPreferenceClass = SharedPreferenceClass(requireActivity())
         token = sharedPreferenceClass!!.getValue_string("token")
 
-        binding.addBtn.visibility = View.INVISIBLE
-        binding.TextView.visibility = View.INVISIBLE
-        binding.view.visibility = View.INVISIBLE
-        binding.view2.visibility = View.INVISIBLE
+        val cal  = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR).toString()
+        val month = (cal.get(Calendar.MONTH)+1).toString()
+        val day = cal.get(Calendar.DATE).toString()
+        cdate = ""+year+"-"+month+""+"-"+day+""
+        Log.d("날짜", cdate)
+        getTodo()
 
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth -> // 달력 날짜가 선택되면
             checkedDay(year, month, dayOfMonth) // checkedDay 메소드 호출
@@ -155,6 +158,12 @@ class CalFragment : Fragment() {
         return root
     }
 
+
+   /* fun RecyclerClick(calData: CalListModel, position: Int){
+        Toast.makeText(requireActivity(), "click", Toast.LENGTH_SHORT).show()
+        //showUDPopup(calData)
+    }*/
+
     private fun showSettingPopup() {
 
         val builder = getActivity()?.let { AlertDialog.Builder(it) }
@@ -166,13 +175,10 @@ class CalFragment : Fragment() {
         // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
         var com_listener = DialogInterface.OnClickListener { p0, p1 ->
             var alert = p0 as AlertDialog
-            var edit: EditText? = alert.findViewById<EditText>(R.id.editText)
+            var edit: EditText? = alert.findViewById(R.id.editText)
 
             todoItem = edit?.text.toString()
             saveTodo(todoItem)
-
-            //tv1.text = "${edit1?.text}"
-            //tv1.append("${edit2?.text}")
         }
 
         builder?.setPositiveButton("완료", com_listener)
@@ -182,11 +188,36 @@ class CalFragment : Fragment() {
 
     }
 
+    private fun showUDPopup(id:String, position: Int) {
+
+        val builder = getActivity()?.let { AlertDialog.Builder(it) }
+        builder?.setTitle("할 일 수정")
+
+        val v1 = layoutInflater.inflate(R.layout.add_dialog, null)
+        builder?.setView(v1)
+
+        // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
+        var com_listener = DialogInterface.OnClickListener { p0, p1 ->
+            var alert = p0 as AlertDialog
+            var edit: EditText? = alert.findViewById(R.id.editText)
+
+            todoItem = edit?.text.toString()
+            updateTodo(id, todoItem)
+        }
+
+        var del_listener = DialogInterface.OnClickListener { p0, p1 ->
+            var alert = p0 as AlertDialog
+            deleteTodo(id, position)
+        }
+
+        builder?.setPositiveButton("수정", com_listener)
+        builder?.setNegativeButton("삭제", del_listener)
+
+        builder?.show()
+    }
+
+
     fun checkedDay(cYear: Int, cMonth: Int, cDay: Int){
-        binding.addBtn.visibility = View.VISIBLE
-        binding.TextView.visibility = View.VISIBLE
-        binding.view.visibility = View.VISIBLE
-        binding.view2.visibility = View.VISIBLE
         cdate = ""+cYear+"-"+(cMonth+1)+""+"-"+cDay+""
         Toast.makeText(activity, cdate, Toast.LENGTH_SHORT).show()
         try {
@@ -233,7 +264,7 @@ class CalFragment : Fragment() {
                 }
             }) {
             @Throws(AuthFailureError::class)
-            override fun getHeaders(): Map<String, String>? {
+            override fun getHeaders(): Map<String, String> {
                 var headers = HashMap<String, String>()
                 // 서버에 요청할 때 Headers 정보.
                 // key : Content-Type, value : application/json
@@ -262,9 +293,9 @@ class CalFragment : Fragment() {
     }
 
     @SuppressLint("WrongConstant")
-    private fun getTodo(){
+    fun getTodo(){
         arrayList = ArrayList()
-        var url = "https://bangidaapp.herokuapp.com/api/calendar"
+        val url = "https://bangidaapp.herokuapp.com/api/calendar"
 
 
         // Get 방식으로 데이터를 요청
@@ -272,16 +303,15 @@ class CalFragment : Fragment() {
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 try{
-                    // success는 변수이름이고, boolean값인 true | false 값을 가짐.
                     if(response.getBoolean("success")){
                         val jsonArray :JSONArray = response.getJSONArray("plans")
 
-                        Log.d("태그", "gettodo")
                         // 사용자가 작성한 캘린더 정보 출력하기
                         for (index in 0 until jsonArray.length()){
                             var jsonObject :JSONObject = jsonArray.getJSONObject(index)
 
                             var calListModel = CalListModel(
+                                jsonObject.getString("_id"),
                                 jsonObject.getString("cdate"),
                                 jsonObject.getString("sche"),
                                 jsonObject.getBoolean("pcheck")
@@ -290,13 +320,21 @@ class CalFragment : Fragment() {
                                 arrayList?.add(calListModel)
                             }
                         }
-                        Log.d("태그", "arraylist: "+arrayList)
 
-                        calListAdapter = CalendarAdapter(arrayList!!)
+                        calListAdapter = CalendarAdapter(requireActivity(), arrayList!!)
                         binding.calrecycler.adapter = calListAdapter
+
+                        // 리사이클러뷰 아이템 클릭 이벤트
+                        calListAdapter!!.setItemClickListener(object :CalendarAdapter.ItemClickListener{
+                            override fun onClick(view: View, position: Int) {
+                                Toast.makeText(requireContext(), "클릭${position}", Toast.LENGTH_SHORT).show()
+                                showUDPopup(arrayList!!.get(position).getId(), position)
+                            }
+                        })
+
                     }
-                } catch (e: JSONException){  // 예외 : 정상적인 처리를 벗어나는 경우
-                    e.printStackTrace() // getMessage, toString과 다르게 리턴값이 없음.
+                } catch (e: JSONException){
+                    e.printStackTrace()
                 }
             },
             Response.ErrorListener { error ->
@@ -316,7 +354,7 @@ class CalFragment : Fragment() {
                 }
             }) {
             @Throws(AuthFailureError::class)
-            override fun getHeaders(): Map<String, String>? {
+            override fun getHeaders(): Map<String, String> {
                 var headers = HashMap<String, String>()
                 // 서버에 요청할 때 Headers 정보.
                 // key : Content-Type, value : application/json
@@ -329,8 +367,6 @@ class CalFragment : Fragment() {
             }
         }
 
-        // 서버의 응답이 오랫동안 없을 때 재시도
-        // socket 통신 제한시간 30초
         val socketTime = 3000
         var policy: RetryPolicy = DefaultRetryPolicy(
             socketTime,
@@ -338,15 +374,93 @@ class CalFragment : Fragment() {
         )
         jsonObjectRequest.retryPolicy = policy
 
-        // Volley를 requestQueue에 대입
         var requestQueue = Volley.newRequestQueue(requireActivity())
-        // 데이터를 파싱.
+        requestQueue.add<JSONObject>(jsonObjectRequest)
+
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun updateTodo(id: String, uSche: String){
+        val url = "https://bangidaapp.herokuapp.com/api/calendar/"+id
+
+        var body = HashMap<String, String>()
+        body.put("sche", uSche)
+
+        // PUT방식으로 수정
+        var jsonObjectRequest = object: JsonObjectRequest(Request.Method.PUT, url, JSONObject(body as Map<*, *>),
+            { response ->
+                try{
+                    if(response.getBoolean("success")){
+                        getTodo()
+                        Toast.makeText(requireActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException){
+                    e.printStackTrace()
+                }
+            },
+            { error ->
+                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                var headers = HashMap<String, String>()
+                headers.put("Connect-Type", "application/json")
+                headers.put("Authorization", token)
+                return headers
+            }
+        }
+
+        val socketTime = 3000
+        var policy: RetryPolicy = DefaultRetryPolicy(
+            socketTime,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        jsonObjectRequest.retryPolicy = policy
+
+        var requestQueue = Volley.newRequestQueue(requireActivity())
         requestQueue.add<JSONObject>(jsonObjectRequest)
     }
 
-        override fun onDestroyView() {
+    @SuppressLint("WrongConstant")
+    private fun deleteTodo(id: String, position:Int){
+        val url = "https://bangidaapp.herokuapp.com/api/calendar/"+id
+        var jsonObjectRequest = object: JsonObjectRequest(Request.Method.DELETE, url, null,
+            { response ->
+                try{
+                    if(response.getBoolean("success")){
+                        Toast.makeText(requireActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                        arrayList?.removeAt(position)
+                        calListAdapter?.notifyItemRemoved(position)
+                    }
+                } catch (e: JSONException){
+                    e.printStackTrace()
+                }
+            },
+            { error ->
+                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                var headers = HashMap<String, String>()
+                headers.put("Connect-Type", "application/json")
+                headers.put("Authorization", token)
+                return headers
+            }
+        }
+
+        val socketTime = 3000
+        var policy: RetryPolicy = DefaultRetryPolicy(
+            socketTime,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        jsonObjectRequest.retryPolicy = policy
+
+        var requestQueue = Volley.newRequestQueue(requireActivity())
+        requestQueue.add<JSONObject>(jsonObjectRequest)
+    }
+
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
