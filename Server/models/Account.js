@@ -9,8 +9,7 @@ const accountSchema = new mongoose.Schema({
         type: String
     },
     acprice: {
-        type: Number,
-        default: 0
+        type: String
     },
     // etc: {
     //     type: String
