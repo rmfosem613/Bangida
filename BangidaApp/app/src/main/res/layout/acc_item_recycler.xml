@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="91dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/blank"
-        android:gravity="center"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="91dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/blank"
+            android:gravity="center"/>
+
+        <View
+            android:id="@+id/v1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+
+        <TextView
+            android:id="@+id/tv_item"
+            android:layout_width="197.8dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/blank"
+            android:gravity="center"/>
+
+        <View
+            android:id="@+id/v2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+
+        <TextView
+            android:id="@+id/tv_cost"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/blank"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
     <View
-        android:id="@+id/v1"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000000" />
-
-    <TextView
-        android:id="@+id/tv_item"
-        android:layout_width="197.8dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/blank"
-        android:gravity="center"/>
-
-    <View
-        android:id="@+id/v2"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000000" />
-
-    <TextView
-        android:id="@+id/tv_cost"
-        android:layout_width="96dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="@string/blank"
-        android:gravity="center"/>
-
+        android:id="@+id/v3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
 </LinearLayout>
