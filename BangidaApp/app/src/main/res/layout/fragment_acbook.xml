@@ -71,10 +71,9 @@
         android:layout_height="35dp"
         android:layout_marginStart="302dp"
         android:layout_marginLeft="302dp"
-        android:layout_marginTop="46.5dp"
+        android:layout_marginTop="49.5dp"
         android:gravity="center"
         android:text="@string/blank"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,18 +83,40 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/acrecycler"
         android:layout_width="381.5dp"
-        android:layout_height="273dp"
+        android:layout_height="265dp"
         android:layout_marginStart="15.2dp"
         android:layout_marginLeft="15.2dp"
         android:layout_marginTop="124dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginRight="16dp" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/add_aclist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="260dp"
+        android:contentDescription="@string/blank"
+        android:src="@mipmap/add"
+        app:backgroundTint="#00000000"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.997" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="265dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
