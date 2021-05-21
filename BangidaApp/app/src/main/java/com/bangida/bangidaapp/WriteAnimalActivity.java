@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,6 +39,8 @@ public class WriteAnimalActivity extends AppCompatActivity {
     SharedPreferenceClass sharedPreferenceClass, animalsharedPreferenceClass;
     String token;
 
+    ImageView back_btn;
+
     // private NumberPicker birth_y, birth_m, birth_d;
 
 /*    Calendar calendar = Calendar.getInstance();
@@ -56,6 +59,17 @@ public class WriteAnimalActivity extends AppCompatActivity {
         petname_ET = findViewById(R.id.petname_ET);
         breed_ET = findViewById(R.id.breed_ET);
         etc_ET = findViewById(R.id.etc_ET);
+        back_btn = findViewById(R.id.back_room);
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WriteAnimalActivity.this, MainActivity.class);
+                //액티비티 스택제거
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
 /*        NumberPicker numYear = (NumberPicker)findViewById(R.id.birth_y);
         numYear.setMinValue(cYear-50);

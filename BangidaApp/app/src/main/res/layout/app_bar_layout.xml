@@ -8,8 +8,7 @@
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|enterAlways"
     android:elevation="10dp"
-    android:background="#1f1f1f"
-    app:menu="@menu/main_menu"
+    android:background="#5583C9"
     android:id="@+id/toolbar">
 
 </androidx.appcompat.widget.Toolbar>

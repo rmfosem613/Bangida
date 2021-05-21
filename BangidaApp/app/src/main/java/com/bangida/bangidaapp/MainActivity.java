@@ -209,15 +209,4 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@Nullable MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 }

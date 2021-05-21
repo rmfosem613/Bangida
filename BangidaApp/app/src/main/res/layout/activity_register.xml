@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:fillViewport="true"
+    android:background="@drawable/page"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -17,6 +18,13 @@
             android:id="@+id/progress_bar"
             android:visibility="gone"/>
 
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/cat_logo"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,44 +32,44 @@
             android:orientation="vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="80dp">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter name..."
+                android:hint="사용자 닉네임"
                 android:background="@drawable/input_field"
-                android:textColorHint="#d3cfcf"
+                android:textColorHint="#2f2f2f"
                 android:id="@+id/name_ET"
                 android:inputType="text"
-                android:textColor="#ffffff"/>
+                android:textColor="#2f2f2f"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter email..."
+                android:hint="이메일"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/input_field"
-                android:textColorHint="#d3cfcf"
+                android:textColorHint="#2f2f2f"
                 android:id="@+id/email_ET"
                 android:inputType="text"
-                android:textColor="#ffffff"/>
+                android:textColor="#2f2f2f"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter password..."
+                android:hint="비밀번호"
                 android:background="@drawable/input_field"
-                android:textColorHint="#d3cfcf"
+                android:textColorHint="#2f2f2f"
                 android:layout_marginTop="20dp"
                 android:id="@+id/pw_ET"
                 android:inputType="textPassword"
-                android:textColor="#ffffff"/>
+                android:textColor="#2f2f2f"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:text="회원가입"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:id="@+id/registerBtn"
@@ -76,8 +84,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Already have an account? Login!!"
-                android:textSize="18sp"
+                android:text="이미 아이디가 있으신가요? 로그인"
+                android:textSize="17sp"
                 android:textAllCaps="false"
                 android:background="@drawable/btn_bg"
                 android:textColor="#ffffff"
