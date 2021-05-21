@@ -9,8 +9,7 @@ const animalSchema = new mongoose.Schema({
         type: String
     },
     birth: {
-        type: Date,
-        default: Date.now
+        type: String
     },
     etc: {
         type: String
