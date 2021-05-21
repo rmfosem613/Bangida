@@ -99,16 +99,18 @@ public class RoomFragment extends Fragment implements RecyclerViewClickListener 
     }
 
     // 동물 정보 수정을 위한 dialog 생성
-    public void showUpdateDialog(final  String  id, String petname, String breed, String etc)  {
+    public void showUpdateDialog(final  String  id, String petname, String breed, String birth, String etc)  {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.custom_dialog_layout, null);
 
         final EditText petname_field = alertLayout.findViewById(R.id.petname);
         final EditText breed_field = alertLayout.findViewById(R.id.breed);
+        final EditText birth_field = alertLayout.findViewById(R.id.birth);
         final EditText etc_field = alertLayout.findViewById(R.id.etc);
 
         petname_field.setText(petname);
         breed_field.setText(breed);
+        birth_field.setText(birth);
         etc_field.setText(etc);
 
         final AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
@@ -127,9 +129,10 @@ public class RoomFragment extends Fragment implements RecyclerViewClickListener 
                     public void onClick(View v) {
                         String petname = petname_field.getText().toString();
                         String breed = breed_field.getText().toString();
+                        String birth = birth_field.getText().toString();
                         String etc = etc_field.getText().toString();
 
-                        updateTask(id, petname, breed, etc);
+                        updateTask(id, petname, breed, birth, etc);
                         alertDialog.dismiss();
                     }
                 });
@@ -171,12 +174,13 @@ public class RoomFragment extends Fragment implements RecyclerViewClickListener 
 
     // put 방식
     // 동물 정보 수정을 위해 서버랑 통신
-    private void updateTask(String id, String petname, String breed, String etc) {
+    private void updateTask(String id, String petname, String breed, String birth, String etc) {
         // 게시글의 id를 추가해서 url을 보내줌 (판별하기 위해)
         String url = "https://bangidaapp.herokuapp.com/api/animal/"+id;
         HashMap<String, String> body = new HashMap<>();
         body.put("petname", petname);
         body.put("breed", breed);
+        body.put("birth", birth);
         body.put("etc", etc);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, new JSONObject(body),
@@ -273,6 +277,7 @@ public class RoomFragment extends Fragment implements RecyclerViewClickListener 
                                     jsonObject.getString("_id"),
                                     jsonObject.getString("petname"),
                                     jsonObject.getString("breed"),
+                                    jsonObject.getString("birth"),
                                     jsonObject.getString("etc")
                                     // 방 인원수 세는 거 추가하기
                             );
@@ -348,14 +353,14 @@ public class RoomFragment extends Fragment implements RecyclerViewClickListener 
 
     @Override
     public void onLongItemClick(int position) {
-        showUpdateDialog(arrayList.get(position).getId(), arrayList.get(position).getPetname(), arrayList.get(position).getBreed(), arrayList.get(position).getEtc());
+        showUpdateDialog(arrayList.get(position).getId(), arrayList.get(position).getPetname(), arrayList.get(position).getBreed(), arrayList.get(position).getBirth(), arrayList.get(position).getEtc());
         Toast.makeText(getActivity(), "Position "+ position, Toast.LENGTH_SHORT).show();
     }
 
-    // 수정을 위해 postion(배열에서 위치한 index값), id(room id), petname, breed, etc 값 넘겨줌
+    // 수정을 위해 postion(배열에서 위치한 index값), id(room id), petname, breed, birth, etc 값 넘겨줌
     @Override
     public void onEditButtonClick(int position) {
-        showUpdateDialog(arrayList.get(position).getId(), arrayList.get(position).getPetname(), arrayList.get(position).getBreed(), arrayList.get(position).getEtc());
+        showUpdateDialog(arrayList.get(position).getId(), arrayList.get(position).getPetname(), arrayList.get(position).getBreed(), arrayList.get(position).getBirth(), arrayList.get(position).getEtc());
     }
 
     // 삭제를 위해 adapter에 postion, id 값 넘겨줌

@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,15 +44,13 @@ public class WriteAnimalActivity extends AppCompatActivity {
 
     ImageView back_btn;
 
-    // private NumberPicker birth_y, birth_m, birth_d;
+    TextView textYear, textMonth, textDay;
+    NumberPicker pickerYear, pickerMonth, pickerDay;
 
-/*    Calendar calendar = Calendar.getInstance();
-    int cYear = calendar.get(Calendar.YEAR);
-    int cMonth = calendar.get(Calendar.MONTH);
-    int cDay = calendar.get(Calendar.DAY_OF_MONTH);
-    int i;*/
 
-    private String petname, breed, etc;
+    private String petname, breed, birth, etc;
+
+    String bYear, bMonth, bDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,38 +72,49 @@ public class WriteAnimalActivity extends AppCompatActivity {
             }
         });
 
-/*        NumberPicker numYear = (NumberPicker)findViewById(R.id.birth_y);
-        numYear.setMinValue(cYear-50);
-        numYear.setMaxValue(cYear);
-        // 데이터 선택 시 editText 방지
-        numYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        numYear.setWrapSelectorWheel(false);
-        numYear.setValue(cYear);
+        // Number Picker 사용
+        textYear = findViewById(R.id.textpicker_y);
+        textMonth = findViewById(R.id.textpicker_m);
+        textDay = findViewById(R.id.textpicker_d);
+        pickerYear = findViewById(R.id.birth_y);
+        pickerMonth = findViewById(R.id.birth_m);
+        pickerDay = findViewById(R.id.birth_d);
 
-        NumberPicker numMonth = (NumberPicker)findViewById(R.id.birth_m);
-        numMonth.setMinValue(1);
-        numMonth.setMaxValue(12);
-        // 데이터 선택 시 editText 방지
-        numMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        numMonth.setWrapSelectorWheel(true);
-        numMonth.setValue(cMonth+1);
+        pickerYear.setMaxValue(2021);
+        pickerYear.setMinValue(1971);
+        pickerYear.setValue(2021);
+        pickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                int picked = newVal-1;
+                textYear.setText(""+picked);
+                bYear = textYear.getText().toString();
+            }
+        });
 
-        NumberPicker numDay = (NumberPicker)findViewById(R.id.birth_d);
-        String[] stringDate = new String[31];
-        for (i = 0; i < 31; i++) {
-            stringDate[i] = Integer.toString(i + 1);
-        }
-        numDay.setDisplayedValues(stringDate);
-        numDay.setMinValue(0);
-        numDay.setMaxValue(30);
-        // 데이터 선택 시 editText 방지
-        numDay.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        numDay.setWrapSelectorWheel(true);
-        numDay.setValue(cDay-1);
+        pickerMonth.setMaxValue(12);
+        pickerMonth.setMinValue(1);
+        pickerMonth.setValue(5);
+        pickerMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                int picked = newVal-1;
+                textMonth.setText(""+picked);
+                bMonth = textMonth.getText().toString();
+            }
+        });
 
-        // 생일
-        String birth_ET = numYear+"/"+numMonth+"/"+numDay;
-        */
+        pickerDay.setMaxValue(31);
+        pickerDay.setMinValue(1);
+        pickerDay.setValue(1);
+        pickerDay.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                int picked = newVal-1;
+                textDay.setText(""+picked);
+                bDay = textDay.getText().toString();
+            }
+        });
 
         add_task_btn = findViewById(R.id.add_task_btn);
 
@@ -118,26 +130,27 @@ public class WriteAnimalActivity extends AppCompatActivity {
                 petname = petname_ET.getText().toString();
                 breed = breed_ET.getText().toString();
                 etc = etc_ET.getText().toString();
+                birth = bYear + "/" + bMonth + "/" + bDay;
 
                 if (!TextUtils.isEmpty(petname)) {
-                    addTask(petname, breed, etc);
+                    addTask(petname, breed, birth, etc);
+                    Log.i("생일", birth);
                 } else {
                     Toast.makeText(WriteAnimalActivity.this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
     }
 
     // 반려동물 정보 추가하기
-    private void addTask(String petname, String breed, String etc) {
+    private void addTask(String petname, String breed, String birth, String etc) {
         String url = "https://bangidaapp.herokuapp.com/api/animal";
 
         HashMap<String, String> body = new HashMap<>();
         body.put("petname", petname);
         body.put("breed", breed);
+        body.put("birth", birth);
         body.put("etc", etc);
 
         // POST 방식으로 데이터를 요청
