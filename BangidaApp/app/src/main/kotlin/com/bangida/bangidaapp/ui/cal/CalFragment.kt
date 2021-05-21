@@ -3,7 +3,6 @@ package com.bangida.bangidaapp.ui.cal
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +66,6 @@ class CalFragment : Fragment() {
         val month = (cal.get(Calendar.MONTH)+1).toString()
         val day = cal.get(Calendar.DATE).toString()
         cdate = ""+year+"-"+month+""+"-"+day+""
-        Log.d("날짜", cdate)
         getTodo()
 
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth -> // 달력 날짜가 선택되면
@@ -309,6 +307,20 @@ class CalFragment : Fragment() {
         var body = HashMap<String, String>()
         body.put("sche", uSche)
 
+        updatef(url, body)
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun updateCheck(id: String, pCheck: Boolean){
+        val url = "https://bangidaapp.herokuapp.com/api/calendar/"+id
+
+        var body = HashMap<String, Boolean>()
+        body.put("pcheck", pCheck)
+
+        updatef(url, body)
+    }
+
+    private fun updatef(url: String, body: HashMap<String, *>) {
         // PUT방식으로 수정
         var jsonObjectRequest = object: JsonObjectRequest(Request.Method.PUT, url, JSONObject(body as Map<*, *>),
             { response ->
@@ -344,47 +356,6 @@ class CalFragment : Fragment() {
         requestQueue.add<JSONObject>(jsonObjectRequest)
     }
 
-    @SuppressLint("WrongConstant")
-    private fun updateCheck(id: String, pCheck: Boolean){
-        val url = "https://bangidaapp.herokuapp.com/api/calendar/"+id
-
-        var body = HashMap<String, Boolean>()
-        body.put("pcheck", pCheck)
-
-        // PUT방식으로 수정
-        var jsonObjectRequest = object: JsonObjectRequest(Request.Method.PUT, url, JSONObject(body as Map<*, *>),
-            { response ->
-                try{
-                    if(response.getBoolean("success")){
-                        getTodo()
-                        Toast.makeText(requireActivity(), "Checked Successfully", Toast.LENGTH_SHORT).show()
-                    }
-                } catch (e: JSONException){
-                    e.printStackTrace()
-                }
-            },
-            { error ->
-                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show()
-            }) {
-            @Throws(AuthFailureError::class)
-            override fun getHeaders(): Map<String, String> {
-                var headers = HashMap<String, String>()
-                headers.put("Connect-Type", "application/json")
-                headers.put("Authorization", token)
-                return headers
-            }
-        }
-
-        val socketTime = 3000
-        var policy: RetryPolicy = DefaultRetryPolicy(
-            socketTime,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
-        jsonObjectRequest.retryPolicy = policy
-
-        var requestQueue = Volley.newRequestQueue(requireActivity())
-        requestQueue.add<JSONObject>(jsonObjectRequest)
-    }
 
     @SuppressLint("WrongConstant")
     private fun deleteTodo(id: String, position:Int){
