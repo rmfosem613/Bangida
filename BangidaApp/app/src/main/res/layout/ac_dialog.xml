@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/et_date"
         android:hint="일"
+        android:inputType="number"
         android:padding="15dp"
         android:singleLine="true"
         />
@@ -33,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/et_cost"
+        android:inputType="number"
         android:hint="지출 금액"
         android:layout_marginTop="20dp"
         android:paddingTop="20dp"

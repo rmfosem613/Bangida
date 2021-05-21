@@ -104,12 +104,14 @@ class CalFragment : Fragment() {
 
     }
 
-    private fun showUDPopup(id:String, position: Int) {
+    private fun showUDPopup(id:String, position: Int, sche:String) {
 
         val builder = getActivity()?.let { AlertDialog.Builder(it) }
         builder?.setTitle("할 일 수정")
-
         val v1 = layoutInflater.inflate(R.layout.add_dialog, null)
+
+        val edit: EditText = v1.findViewById(R.id.editText)
+        edit.setText(sche)
         builder?.setView(v1)
 
         // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
@@ -242,7 +244,7 @@ class CalFragment : Fragment() {
                         // 리사이클러뷰 아이템 클릭 이벤트
                         calListAdapter!!.setItemClickListener(object :CalendarAdapter.ItemClickListener{
                             override fun onClick(view: View, position: Int) {
-                                showUDPopup(arrayList!!.get(position).getId(), position)
+                                showUDPopup(arrayList!!.get(position).getId(), position, arrayList!!.get(position).getSche())
                             }
                         })
 

@@ -2,10 +2,10 @@ package com.bangida.bangidaapp.model;
 
 public class AccModel {
 
-    private Integer acprice;
-    private String  acdate, accontent, id;
 
-    public AccModel( String id, Integer acprice, String acdate, String accontent) {
+    private String  acdate, acprice, accontent, id;
+
+    public AccModel( String id, String acprice, String acdate, String accontent) {
         this.id = id;
         this.acprice = acprice;
         this.acdate = acdate;
@@ -16,7 +16,7 @@ public class AccModel {
         return id;
     }
 
-    public Integer getAcprice() {
+    public String getAcprice() {
         return acprice;
     }
 

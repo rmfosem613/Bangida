@@ -32,13 +32,14 @@ class AcbookFragment : Fragment() {
     private lateinit var acbookViewModel: AcbookViewModel
     private var _binding: FragmentAcbookBinding? = null
 
-    var acCost: Int = 0
+    var acCost: String = ""
     var acItem: String = ""
-    var acdate: String = ""
+    var acDate: String = ""
     var sharedPreferenceClass: SharedPreferenceClass? = null
     var token: String = ""
     var arrayList: ArrayList<AccModel>? = null
     var acAdapter: AcAdapter? = null
+    var totalP:Int = 0
 
     private val binding get() = _binding!!
 
@@ -55,8 +56,9 @@ class AcbookFragment : Fragment() {
 
         sharedPreferenceClass = SharedPreferenceClass(requireActivity())
         token = sharedPreferenceClass!!.getValue_string("token")
-
         getAc()
+
+        binding.tvTotalnum.setText(totalP.toString())
 
         binding.addAc.setOnClickListener {
             showItemAddPopup()
@@ -81,41 +83,110 @@ class AcbookFragment : Fragment() {
             var edit2: EditText? = alert.findViewById(R.id.et_item)
             var edit3: EditText? = alert.findViewById(R.id.et_cost)
 
-            var acCosts = Integer.parseInt(edit3?.text.toString())
-
-            acdate = edit?.text.toString()
-            acCost = acCosts
+            acDate = edit?.text.toString()
+            acCost = edit3?.text.toString()
             acItem = edit2?.text.toString()
-            saveAcItem(acdate, acItem)
-
+            saveAcItem(acDate, acItem, acCost)
+            getAc()
         }
 
         builder?.setPositiveButton("완료", com_listener)
         builder?.setNegativeButton("취소", null)
 
         builder?.show()
-
     }
 
-    private fun saveAcItem(acDate: String, acItem: String) {
+    private fun showItemUDPopup(id: String?, position: Int, date: String, item: String, cost: String) {
+        val builder = getActivity()?.let { AlertDialog.Builder(it) }
+        builder?.setTitle("항목 입력")
+        val v1 = layoutInflater.inflate(R.layout.ac_dialog, null)
+
+        val edit:EditText = v1.findViewById(R.id.et_date)
+        val edit2:EditText = v1.findViewById(R.id.et_item)
+        val edit3:EditText = v1.findViewById(R.id.et_cost)
+
+        edit.setText(date)
+        edit2.setText(item)
+        edit3.setText(cost)
+
+        builder?.setView(v1)
+
+
+        // p0에 해당 AlertDialog가 들어온다. findViewById를 통해 view를 가져와서 사용
+        var com_listener = DialogInterface.OnClickListener { p0, p1 ->
+            var alert = p0 as AlertDialog
+            var edit: EditText? = alert.findViewById(R.id.et_date)
+            var edit2: EditText? = alert.findViewById(R.id.et_item)
+            var edit3: EditText? = alert.findViewById(R.id.et_cost)
+
+            acDate = edit?.text.toString()
+            acCost = edit3?.text.toString()
+            acItem = edit2?.text.toString()
+
+            updateAcItem(id, acDate, acItem, acCost)
+            getAc()
+        }
+
+        var del_listener = DialogInterface.OnClickListener { p0, p1 ->
+            var alert = p0 as AlertDialog
+            deleteAcItem(id, position)
+        }
+
+        builder?.setPositiveButton("수정", com_listener)
+        builder?.setNegativeButton("삭제", del_listener)
+
+        builder?.show()
+    }
+
+    private fun deleteAcItem(id: String?, position: Int) {
+        val url = "https://bangidaapp.herokuapp.com/api/account/"+id
+        var jsonObjectRequest = object: JsonObjectRequest(Request.Method.DELETE, url, null,
+            { response ->
+                try{
+                    if(response.getBoolean("success")){
+                        Toast.makeText(requireActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                        arrayList?.removeAt(position)
+                        acAdapter?.notifyItemRemoved(position)
+                    }
+                } catch (e: JSONException){
+                    e.printStackTrace()
+                }
+            },
+            { error ->
+                Toast.makeText(activity, error.toString(), Toast.LENGTH_SHORT).show()
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                var headers = HashMap<String, String>()
+                headers.put("Connect-Type", "application/json")
+                headers.put("Authorization", token)
+                return headers
+            }
+        }
+
+        val socketTime = 3000
+        var policy: RetryPolicy = DefaultRetryPolicy(
+            socketTime,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        jsonObjectRequest.retryPolicy = policy
+
+        var requestQueue = Volley.newRequestQueue(requireActivity())
+        requestQueue.add<JSONObject>(jsonObjectRequest)
+    }
+
+
+
+    private fun saveAcItem(acDate: String, acItem: String, acCost: String) {
         val url = "https://bangidaapp.herokuapp.com/api/account"
 
         var body = HashMap<String, String>()
         body.put("acdate", acDate)
         body.put("accontent", acItem)
-
-        save(url, body)
-        getAc()
-    }
-
-   /* private fun updateCost(acCost: Int, id: String) {
-        val url = "https://bangidaapp.herokuapp.com/api/account/"+id
-
-        var body = HashMap<String, Int>()
         body.put("acprice", acCost)
 
         save(url, body)
-    }*/
+    }
 
     private fun save(url: String, body: HashMap<String, *>) {
         var jsonObjectRequest = object: JsonObjectRequest(
@@ -165,6 +236,7 @@ class AcbookFragment : Fragment() {
 
     private fun getAc() {
         arrayList = ArrayList()
+
         val url = "https://bangidaapp.herokuapp.com/api/account"
 
         // Get 방식으로 데이터를 요청
@@ -180,15 +252,22 @@ class AcbookFragment : Fragment() {
 
                             var accModel = AccModel(
                                 jsonObject.getString("_id"),
-                                jsonObject.getInt("acprice"),
+                                jsonObject.getString("acprice"),
                                 jsonObject.getString("acdate"),
                                 jsonObject.getString("accontent")
                             )
                             arrayList?.add(accModel)
                         }
-
                         acAdapter = AcAdapter(requireActivity(), arrayList!!)
                         binding.acrecycler.adapter = acAdapter
+
+                        // 리사이클러뷰 아이템 클릭 이벤트
+                        acAdapter!!.setItemClickListener(object : AcAdapter.ItemClickListener{
+                            override fun onClick(view: View, position: Int) {
+                                showItemUDPopup(arrayList!!.get(position).getId(), position, arrayList!!.get(position).getAcdate(),
+                                    arrayList!!.get(position).getAccontent(), arrayList!!.get(position).getAcprice())
+                            }
+                        })
 
                     }
                 } catch (e: JSONException){
@@ -227,6 +306,17 @@ class AcbookFragment : Fragment() {
 
         var requestQueue = Volley.newRequestQueue(requireActivity())
         requestQueue.add<JSONObject>(jsonObjectRequest)
+    }
+
+    private fun updateAcItem(id: String?, acDate: String, acItem: String, acCost: String) {
+        val url = "https://bangidaapp.herokuapp.com/api/account/"+id
+
+        var body = HashMap<String, String>()
+        body.put("acdate", acDate)
+        body.put("accontent", acItem)
+        body.put("acprice", acCost)
+
+        updatef(url, body)
     }
 
     private fun updatef(url: String, body: HashMap<String, *>) {
