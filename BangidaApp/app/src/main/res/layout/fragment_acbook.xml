@@ -111,12 +111,23 @@
         app:layout_constraintTop_toTopOf="@+id/view3"
         app:layout_constraintVertical_bias="0.997" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/aclistrecycler"
+        android:layout_width="381.5dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acrecycler"
+        app:layout_constraintVertical_bias="0.0" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="265dp" />
+        app:layout_constraintGuide_end="63dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
