@@ -29,6 +29,7 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AcbookFragment : Fragment() {
 
@@ -43,6 +44,7 @@ class AcbookFragment : Fragment() {
     var arrayList: ArrayList<AccModel>? = null
     var acAdapter: AcAdapter? = null
     var totalP:Int = 0
+    var tarryList: ArrayList<Int>? = null
 
     var checkItem:String = ""
     var carrayList: ArrayList<AclModel>? = null
@@ -345,6 +347,7 @@ class AcbookFragment : Fragment() {
 
     private fun getAc() {
         arrayList = ArrayList()
+        totalP = 0
 
         val url = "https://bangidaapp.herokuapp.com/api/account"
 
@@ -366,9 +369,12 @@ class AcbookFragment : Fragment() {
                                 jsonObject.getString("accontent")
                             )
                             arrayList?.add(accModel)
+                            totalP += accModel.acprice.toInt()
                         }
                         acAdapter = AcAdapter(requireActivity(), arrayList!!)
                         binding.acrecycler.adapter = acAdapter
+
+                        binding.tvTotalnum.setText(totalP.toString()+"원")
 
                         // 리사이클러뷰 아이템 클릭 이벤트
                         acAdapter!!.setItemClickListener(object : AcAdapter.ItemClickListener{
