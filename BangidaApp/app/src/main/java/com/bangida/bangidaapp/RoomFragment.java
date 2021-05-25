@@ -73,27 +73,10 @@ public class RoomFragment extends Fragment implements RecyclerViewClickListener 
         sharedPreferenceClass = new SharedPreferenceClass(getContext());
         token = sharedPreferenceClass.getValue_string("token");
 
-        share_test = view.findViewById(R.id.share_test);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
         getTasks();
-
-        // 공유하기
-        share_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "당신의 가족 혹은 지인과 함께 반려동물의 일정과 가계부를 손쉽게 관리해보세요. " +
-                        "token : "+ token);
-                sendIntent.setType("text/plain");
-
-                Intent shareIntent = Intent.createChooser(sendIntent, "공유하기");
-                startActivity(shareIntent);
-            }
-        });
 
         return view;
     }

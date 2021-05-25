@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RoomFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -34,13 +33,5 @@
         android:layout_centerVertical="true"
         android:visibility="gone"
         />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="65dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginLeft="300dp"
-        android:text="공유하기"
-        android:id="@+id/share_test"/>
 
 </RelativeLayout>

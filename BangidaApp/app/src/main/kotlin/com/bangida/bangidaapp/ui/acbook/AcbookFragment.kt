@@ -44,7 +44,6 @@ class AcbookFragment : Fragment() {
     var arrayList: ArrayList<AccModel>? = null
     var acAdapter: AcAdapter? = null
     var totalP:Int = 0
-    var tarryList: ArrayList<Int>? = null
 
     var checkItem:String = ""
     var carrayList: ArrayList<AclModel>? = null
