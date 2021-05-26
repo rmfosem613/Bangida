@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     // menu에 사용자 이름과 이메일 불러오기
     String token;
 
-    Button receive_token;
+    ImageButton receive_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        receive_token = (Button) findViewById(R.id.receive_token);
+        receive_token = (ImageButton) findViewById(R.id.receive_token);
 
         token = sharedPreferenceClass.getValue_string("token");
 
