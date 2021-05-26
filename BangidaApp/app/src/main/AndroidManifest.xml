@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/cat"
+        android:icon="@drawable/cat_dog"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/cat_round"
+        android:roundIcon="@drawable/cat_dog_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BangidaApp">
         <activity android:name=".WriteAnimalActivity"></activity>
