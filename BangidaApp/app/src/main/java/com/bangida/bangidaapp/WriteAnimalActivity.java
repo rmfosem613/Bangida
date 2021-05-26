@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ import java.util.Map;
 public class WriteAnimalActivity extends AppCompatActivity {
 
     private EditText petname_ET,breed_ET, etc_ET;
-    private Button add_task_btn;
+    private ImageButton add_task_btn;
     SharedPreferenceClass sharedPreferenceClass, animalsharedPreferenceClass;
     String token;
 

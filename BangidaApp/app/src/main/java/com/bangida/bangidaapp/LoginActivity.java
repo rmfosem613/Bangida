@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button loginBtn, registerBtn;
+    private ImageButton loginBtn, registerBtn;
     private EditText email_ET, pw_ET;
     ProgressBar progressBar;
     private String email, password;

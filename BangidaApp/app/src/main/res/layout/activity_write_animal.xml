@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WriteAnimalActivity">
+    tools:context=".WriteAnimalActivity"
+    android:background="@drawable/page">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,20 +37,19 @@
             android:layout_marginTop="50dp"
             android:layout_marginLeft="20dp">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="11dp"
-                android:textSize="15dp"
-                android:text="이름 : "/>
+                android:background="@drawable/name_tag"/>
 
             <EditText
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:padding="12dp"
+                android:layout_marginLeft="5dp"
                 android:hint="반려동물 이름 입력"
                 android:textColor="#2f2f2f"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/input_field"
                 android:id="@+id/petname_ET"/>
 
         </LinearLayout>
@@ -61,19 +61,19 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:textSize="15dp"
-                android:text="종 : "/>
+                android:background="@drawable/breed_tag"/>
 
             <EditText
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="27dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:padding="12dp"
                 android:textColor="#2f2f2f"
+                android:background="@drawable/input_field"
                 android:hint="반려동물 종 입력"
                 android:id="@+id/breed_ET"/>
 
@@ -81,47 +81,62 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
 
-            <TextView
-                android:layout_width="70dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="생년월일/입양일"/>
+                android:background="@drawable/birth_tag"/>
 
             <NumberPicker
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/birth_y"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/white"
+                android:padding="10dp"
                 android:theme="@style/AppTheme.NumberPicker"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textSize="18dp"
                 android:text="년"/>
 
             <NumberPicker
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/birth_m"
+                android:layout_marginRight="5dp"
+                android:background="@color/white"
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"
                 android:theme="@style/AppTheme.NumberPicker"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textSize="18dp"
                 android:text="월"/>
 
             <NumberPicker
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/birth_d"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:theme="@style/AppTheme.NumberPicker"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textSize="18dp"
                 android:text="일"/>
 
         </LinearLayout>
@@ -133,19 +148,18 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:textSize="15dp"
-                android:text="기타 : "/>
+                android:background="@drawable/etc_tag"/>
 
             <EditText
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:padding="12dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:textColor="#2f2f2f"
+                android:background="@drawable/input_field"
                 android:hint="기타 정보 입력"
                 android:id="@+id/etc_ET"/>
 
@@ -182,14 +196,14 @@
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/add_task_btn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginRight="20dp"
-            android:text="동물 정보 생성" />
+            android:background="@drawable/animal_btn"/>
 
 
     </LinearLayout>

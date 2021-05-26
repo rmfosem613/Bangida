@@ -16,15 +16,14 @@
 
         <include layout="@layout/app_bar_layout" />
 
-        <Button
+        <ImageButton
             android:id="@+id/add_task_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:textSize="30dp"
-            android:text="+"/>
+            android:background="@mipmap/adds"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -40,6 +39,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="end"
+            android:textColor="#2f2f2f"
             android:text="초대 토큰 입력하기" />
 
 

@@ -54,12 +54,10 @@
                 android:inputType="textPassword"
                 android:textColor="#2f2f2f"/>
 
-            <Button
+            <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="로그인"
-                android:textAllCaps="false"
-                android:textSize="18sp"
+                android:background="@drawable/login1"
                 android:id="@+id/loginBtn"
                 android:layout_marginTop="30dp"/>
 
@@ -69,13 +67,10 @@
                 android:background="@color/shape_black"
                 android:layout_margin="50dp"/>
 
-            <Button
+            <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="아직 회원이 없으신가요? 회원가입"
-                android:textSize="17sp"
-                android:textAllCaps="false"
-                android:background="@drawable/btn_bg"
+                android:background="@drawable/register2"
                 android:textColor="#ffffff"
                 android:id="@+id/registerBtn"/>
 

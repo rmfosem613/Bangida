@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // 동물 정보 생성창으로 이동
-        Button add_task_btn = (Button)findViewById(R.id.add_task_btn);
+        ImageButton add_task_btn = (ImageButton)findViewById(R.id.add_task_btn);
         add_task_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
